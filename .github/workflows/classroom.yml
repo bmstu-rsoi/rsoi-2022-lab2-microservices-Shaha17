@@ -37,8 +37,8 @@ jobs:
           WAIT_PORTS: 8080,8070,8060,8050
 
       - name: Wait startup
-        - run:
-            - sleep 10
+        run: |
+          sleep 10
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
