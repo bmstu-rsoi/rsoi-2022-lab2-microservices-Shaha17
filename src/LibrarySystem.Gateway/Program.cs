@@ -1,6 +1,9 @@
 using LibrarySystem.Gateway.Services;
 using LibrarySystem.Gateway.Utils.Converters;
 
+
+await Task.Delay(TimeSpan.FromSeconds(15));
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
