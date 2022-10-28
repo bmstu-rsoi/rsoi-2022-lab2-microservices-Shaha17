@@ -74,10 +74,12 @@ public class ReservationsController : ControllerBase
             return BadRequest();
         }
 
-        var reservation = await _reservationsService.TakeBook(xUserName, request);
-        var libBook =
-            await _librariesService.DecrementAvailableCountByLibUidAndBookUid(request.LibraryUid, request.BookUid);
+        var reservationTask = _reservationsService.TakeBook(xUserName, request);
+        var decrementTask = _librariesService.DecrementAvailableCountByLibUidAndBookUid(request.LibraryUid, request.BookUid);
+        var reservation = await reservationTask;
 
+        var libBook =
+            await decrementTask;
 
         var response = new TakeBookResponse()
         {
@@ -130,7 +132,7 @@ public class ReservationsController : ControllerBase
             reservationToUpd.Status = ReservationStatuses.RETURNED;
         }
 
-        await _reservationsService.UpdateReservationByUidAsync(reservationToUpd);
+        var updateReservationTask = _reservationsService.UpdateReservationByUidAsync(reservationToUpd);
 
         var libBook =
             await _librariesService.GetLibraryBookByLibUidAndBookUidAsync(reservationToUpd.LibraryUid,
@@ -140,7 +142,7 @@ public class ReservationsController : ControllerBase
             penalty += 1;
         }
 
-        await _librariesService.IncrementAvailableCountByLibUidAndBookUid(reservationToUpd.LibraryUid,
+        var incrementTask = _librariesService.IncrementAvailableCountByLibUidAndBookUid(reservationToUpd.LibraryUid,
             reservationToUpd.BookUid);
         if (penalty == 0)
         {
@@ -151,6 +153,9 @@ public class ReservationsController : ControllerBase
             await _ratingService.ChangeUserRating(xUserName, -penalty * 10);
         }
 
+        
+        await updateReservationTask;
+        await incrementTask;
         return NoContent();
     }
 }

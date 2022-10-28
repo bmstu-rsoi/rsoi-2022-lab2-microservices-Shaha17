@@ -18,6 +18,7 @@ public class ContextHelper
                 Address = "2-я Бауманская ул., д.5, стр.1",
             };
             await context.Libraries.AddAsync(lib);
+            await context.SaveChangesAsync();
         }
 
         if (!context.Books.Any())
@@ -33,6 +34,7 @@ public class ContextHelper
             };
 
             await context.Books.AddAsync(book);
+            await context.SaveChangesAsync();
         }
 
 
@@ -49,6 +51,6 @@ public class ContextHelper
             await context.LibraryBooks.AddAsync(libBook);
         }
 
-        context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 }

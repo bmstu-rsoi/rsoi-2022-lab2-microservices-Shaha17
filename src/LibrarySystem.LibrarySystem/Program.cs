@@ -14,7 +14,7 @@ var app = builder.Build();
 
 //Seed data 
 {
-    await Task.Delay(TimeSpan.FromSeconds(1));
+    await Task.Delay(TimeSpan.FromSeconds(5));
     var scope = app.Services.CreateAsyncScope();
     var services = scope.ServiceProvider;
     var logger = services.GetRequiredService<ILogger<Program>>();
