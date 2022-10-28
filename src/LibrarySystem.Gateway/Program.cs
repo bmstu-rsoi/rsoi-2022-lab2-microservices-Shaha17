@@ -2,7 +2,7 @@ using LibrarySystem.Gateway.Services;
 using LibrarySystem.Gateway.Utils.Converters;
 
 
-await Task.Delay(TimeSpan.FromSeconds(15));
+await Task.Delay(TimeSpan.FromSeconds(10));
 
 var builder = WebApplication.CreateBuilder(args);
 
