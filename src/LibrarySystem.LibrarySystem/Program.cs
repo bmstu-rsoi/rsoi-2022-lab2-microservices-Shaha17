@@ -14,14 +14,14 @@ var app = builder.Build();
 
 //Seed data 
 {
-    await Task.Delay(TimeSpan.FromSeconds(5));
+    await Task.Delay(TimeSpan.FromSeconds(1));
     var scope = app.Services.CreateAsyncScope();
     var services = scope.ServiceProvider;
     var logger = services.GetRequiredService<ILogger<Program>>();
     try
     {
         var librariesContext = services.GetRequiredService<LibrariesContext>();
-        await ContextHelper.Seed(librariesContext);
+        ContextHelper.Seed(librariesContext);
         logger.LogInformation("DB filled");
     }
     catch (Exception ex)
